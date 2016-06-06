@@ -1,0 +1,118 @@
+@font-face {
+    font-family: lihei;
+    src: url('lihei.otf');
+}
+
+body {
+    font-family: "lihei";
+    font-size: 2em;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    /*opacity: 0.5;*/
+}
+
+h1 {
+    text-align: center;
+    margin: 5px 0;
+    font-weight: 400;
+}
+
+.no-sense-div {
+    display: block;
+    height: 120px;
+    width: 100%;
+}
+
+.contents {
+    width: 1000px;
+    height: 750px;
+    margin: 0 auto;
+    /*background-image: url("./bg-final.jpg");*/
+    background-size: contain;
+}
+
+.main-content {
+    position: relative;
+    width: 1000px;
+    margin: 0 auto;
+    height: 475px;
+    background-image: url("coordinate.png");
+	background-repeat: no-repeat;
+    background-size: contain;
+}
+.sidebar {
+    position: absolute;
+    bottom: 0;
+    left: -20px;
+    width: 50px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+}
+
+.sidebar .coordinates {
+    position: absolute;
+    bottom: 0;
+    left: -50px;
+}
+.vote-cube {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 100%;
+    margin: 0 10px;
+}
+
+.no-sense {
+    width: 40px;
+    margin: 0;
+}
+
+.vote-cube-box {
+    position: absolute;
+    bottom: 7px;
+}
+
+.user-msg {
+    font-size: 1em;
+    text-align: center;
+
+}
+
+.user-msg .nums {
+    color: #313e44;
+}
+
+.user-names {
+    min-height: 100px;
+    width: 950px;
+    margin: 0 auto;
+    padding-left: 25px;
+    text-align: center;
+}
+
+.names {
+    display: inline-block;
+    float: left;
+    width: 110px;
+    margin: 0 0px;
+    letter-spacing: 1px;
+}
+
+.vote-num-cube {
+    width: 80px;
+    border-radius: 18px;
+}
+
+.hide {
+    display: none;
+}
