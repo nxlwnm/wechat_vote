@@ -23,10 +23,10 @@ class IndexAction extends Action {
   const NUM_OF_VOTE_LIMIT_MANAGEMENT = 6;
   const NUM_OF_VOTE_LIMIT_CLUB = 7;
   const MSG_VOTE_NOT_START = '投票环节尚未开始，您还可以仔细地思考手上的选票给哪位候选人喔:)';
-  const MSG_CLUB_VOTE_NOT_START = '管理部投票已经结束，但常委会投票环节尚未开始，您还可以仔细地思考手上的选票给哪位候选人喔';
-  const MSG_VOTE_END = "投票环节已经结束！\n感谢您对学生软件技术发展中心的大力支持！";
+  const MSG_CLUB_VOTE_NOT_START = '团委投票已经结束，但学生会投票环节尚未开始，您还可以仔细地思考手上的选票给哪位候选人喔';
+  const MSG_VOTE_END = "投票环节已经结束！\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！";
   const MSG_MANAGER_HINT = "指令输错啦，请重新输入！\n 管理部投票开始请输\"mbegin\"\n 常委投票开始请输\"cbegin\" 投票结束请输\"end\"";
-  const MSG_VALID_VOTE = "指令输入正确！\n请重新输入并于主持人宣布投票正式开始后进行投票！\n感谢您对中山大学学生软件技术发展中心的大力支持！";
+  const MSG_VALID_VOTE = "指令输入正确！\n请重新输入并于主持人宣布投票正式开始后进行投票！\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！";
   const MSG_INVALID_VOTE = "抱歉，指令输入有误！\n请输入您心仪的候选人的编号，并用空格隔开。\n";
   public function index(){
     $options = array(
@@ -48,43 +48,46 @@ class IndexAction extends Action {
     $user_type = $this->checkAccount($revFrom);
     #$weObj->text( $user_type )->reply();return;
     switch($type) {
-      case Wechat::MSGTYPE_TEXT:
+      case Wechat::MSGTYPE_TEXT: #只接受文字消息
         #$weObj->text( $user_type)->reply();
         $keyword = $weObj->getRevContent();
         $keyword = trim($keyword);
         if( $this->deal_with_key_word( $keyword, $weObj ) )
          return;
+        #未认证用户
         if( $user_type ==  self::USER_UNAUTHORIZED ){
           $user = M('user');
           $map['code'] = $keyword;
-          $data = $user->where( $map )->select();
-          if( $data != false ){
-            if( $data[0]['active'] == 1 ){
+          $data = $user->where( $map )->select(); #查找消息是否为验证码
+          if( $data != false ){ #不是验证码
+            if( $data[0]['active'] == 1 ){ #已激活
               if( $data[0]['auth'] == 1 )
                 $weObj->text("亲爱的".$data[0]['name']."同学，您的投票代码已被使用，请勿重复登记信息，谢谢！")->reply();  
               if( $data[0]['auth'] == 2 ){
                 $weObj->text("尊敬的".$data[0]['name']."同学，您的投票代码已被使用，请勿重复登记信息，谢谢！")->reply();  
               }
             }
-            else{
+            else{ #未激活，注册该用户
               $data[0]['openid'] = $revFrom;
               $data[0]['active'] = 1;
               $user->save( $data[0] );
               if( $data[0]['auth'] == 1 )
-                $weObj->text("亲爱的".$data[0]['name']."同学，欢迎来到中山大学学生软件技术发展中心换届大会！\n您的信息已经成功登记，请静候投票开始。\n感谢您对中山大学学生软件技术发展中心的大力支持！")->reply(); 
+                $weObj->text("亲爱的".$data[0]['name']."同学，欢迎来到数据科学与计算机学院第二次团员代表大会暨学生代表大会！\n您的信息已经成功登记，请静候投票开始。\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！")->reply(); 
               else{
-                $weObj->text("尊敬的".$data[0]['name']."老师，您好！\n欢迎莅临中山大学学生软件技术发展中心换届大会！\n请静候投票开始。\n感谢您对中山大学学生软件技术发展中心的大力支持！")->reply(); 
+                $weObj->text("尊敬的".$data[0]['name']."老师，您好！\n欢迎莅临数据科学与计算机学院第二次团员代表大会暨学生代表大会！\n请静候投票开始。\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！")->reply(); 
               } 
             } 
           }
           else {
-            $weObj->text("抱歉，您输入的候选人投票代码有误，请重新输入。\n回复\"管理部\"可查看本次换届选举管理部8名候选人的详细资料。\n回复\"中心\"可查看本次换届选举12名最高管理团队候选人的详细资料。\n感谢您对中山大学学生软件技术发展中心的大力支持！")->reply();#\n回复“管理部”可查看管理部目前的投票结果\n回复“俱乐部”可查看俱乐部投票结果。\n感谢您对中山大学学生软件技术发展中心的大理支持！")->reply();
+            $weObj->text("抱歉，您输入的候选人投票代码有误，请重新输入。\n回复\"团委\"可查看本次换届选举团委8名候选人的详细资料。\n回复\"学生会\"可查看本次换届选举12名学生会候选人的详细资料。\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！")->reply();#\n回复“管理部”可查看管理部目前的投票结果\n回复“俱乐部”可查看俱乐部投票结果。\n感谢您对中山大学学生软件技术发展中心的大理支持！")->reply();
           }
         }
+        #选举人
         else if( $user_type == self::USER_VOTER ){
           $voters = explode( ' ',$keyword);
           $state =$this->get_vote_state();
-
+          #分投票状态处理
+          #未开始投票
           if( $state == self::VOTE_STATE_READY ){
             if( $this->valid_voter( $voters ) ){
               $weObj->text( self::MSG_VALID_VOTE )->reply();
@@ -99,9 +102,11 @@ class IndexAction extends Action {
               $weObj->text( $res_msg )->reply();
             }
           }
+          #已结束
           else if( $state == self::VOTE_STATE_END ){
             $weObj->text( self::MSG_VOTE_END )->reply();
           }
+          #中间休息阶段
           else if( $state == self::VOTE_STATE_MID ){
             if( $this->valid_voter( $voters ) ){
               $weObj->text( self::MSG_VALID_VOTE )->reply();
@@ -116,6 +121,7 @@ class IndexAction extends Action {
               $weObj->text( $res_msg )->reply();
             }
           }
+          #第一阶段
           else if( $state == self::VOTE_STATE_MANAGEMENT ){
             $user = M('user');
             $user_map['openid'] = $revFrom;
@@ -173,9 +179,10 @@ class IndexAction extends Action {
               $res_msg .= $voter['id']."号：".$voter['name']."（目前获".$voter['count']."票）\n";
               $voter_db->save( $voter );
             }
-            $res_msg .= '感谢您对中山大学学生软件技术发展中心的大力支持！';
+            $res_msg .= '感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！';
             $weObj->text( $res_msg )->reply(); 
           }
+          #第二阶段，注意必须投第一阶段才能投第二阶段
           else if( $state == self::VOTE_STATE_CLUB){
             $user = M('user');
             $user_map['openid'] = $revFrom;
@@ -233,11 +240,12 @@ class IndexAction extends Action {
               $res_msg .= $voter['id']."号：".$voter['name']."（目前获".$voter['count']."票）\n";
               $voter_db->save( $voter );
             }
-            $res_msg .= '感谢您对中山大学学生软件技术发展中心的大力支持！';
+            $res_msg .= '感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！';
             $weObj->text( $res_msg )->reply(); 
             
           }
         }
+        #管理员
         else if( $user_type == self::USER_MANAGER ){
           #$weObj->text('abc')->reply();
           switch ($keyword) {
@@ -273,11 +281,11 @@ class IndexAction extends Action {
                 $weObj->text( '操作失败，请重新初始化再重新开始投票。\n投票先从管理部开始，再到常委会。')->reply(); 
               }
               break;
-            case 'init':
+            case 'init': #初始化会清空用户openid，选举开始后千万别init，如票数相同需要重新投票请用again
               $this->init();
               $weObj->text( "初始化成功！")->reply();
               break;
-            case 'again':
+            case 'again': #重置投票，但不清空openid
               $this->again();
               $weObj->text("重新投票开始")->reply();
               break;
@@ -288,7 +296,7 @@ class IndexAction extends Action {
         }
         break;
       default:
-        $weObj->text("感谢关注中山大学学生软件技术发展中心！\n2014中山大学学生软件技术发展中心换届正火热进行中！\n回复\"管理部\"可查看管理部8名候选人详细资料。\n回复\"中心\"可查看最高管理团队12名候选人的详细资料。\n")->reply();   
+        $weObj->text("感谢关注数据科学与计算机学院团委！\n数据科学与计算机学院第二次团员代表大会暨学生代表大会正火热进行中！\n回复\"团委\"可查看团委8名候选人详细资料。\n回复\"学生会\"可查看学生会12名候选人的详细资料。\n")->reply();   
     }
   }
 
@@ -310,8 +318,8 @@ class IndexAction extends Action {
   # key word must not be management or club, return false or not return true;
   private function deal_with_key_word( $word, $weObj ){
    switch( $word ){
-    case '管理部':
-     $data = array(
+    case '团委':
+     /*$data = array(
 	   	"0"=>array(
 	   		'Title'=>'中心管理部1号候选人顾斐',
 	   		'Description'=>'summary text',
@@ -361,11 +369,13 @@ class IndexAction extends Action {
                         'Url'=>'http://mp.weixin.qq.com/s?__biz=MjM5Mjk1NjgyMA==&mid=200214547&idx=1&sn=6f70771d01aa57702b1734fb22befc48#rd'
                 )
              ); 
-     $weObj->news( $data )->reply();
+     $weObj->news( $data )->reply();*/
+     $data = "1号候选人：...2号候选人...";
+     $weObj->text($data)->reply();
      return true;
      break;
-    case '中心':
-     $c_data = array(
+    case '学生会':
+     /*$c_data = array(
 	   	"0"=>array(
 	   		'Title'=>'1号候选人黄慧仪及2号候选人范巧文',
 	   		'Description'=>'summary text',
@@ -403,7 +413,9 @@ class IndexAction extends Action {
                         'Url'=>'http://mp.weixin.qq.com/s?__biz=MjM5Mjk1NjgyMA==&mid=200214400&idx=1&sn=16f7e9fc7ef6b32ce9a16f5a13527cb1#rd'
                 )
               ); 
-     $weObj->news( $c_data )->reply();
+     $weObj->news( $c_data )->reply();*/
+     $c_data = "一号候选人...二号候选人...";
+     $weObj->text($c_data)->reply();
      return true;
      break;
     default:

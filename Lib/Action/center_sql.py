@@ -17,9 +17,9 @@ def main():
     continue
    char_arr = line.split(' ')
    if( len(char_arr) == 3 ):
-    print str(char_arr[2]), str(char_arr[1])
+    #print str(char_arr[2], str(char_arr[1])
     #cur.execute( "update user set name = %s where code = %s", (char_arr[2], char_arr[1] ) )
-    cur.execute( "insert into user ( name,code ) values ( %s, %s ) ", ( char_arr[2] ,char_arr[1] ) )
+    cur.execute("insert into user (name, code) values (%s, %s)", (char_arr[2], char_arr[1]))
     #cur.execute("insert into user (name, code, auth) values ('zm', 'sysu', 0)")
     sql_conn.commit()
    else:
