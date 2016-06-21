@@ -27,7 +27,7 @@ USE `vote`;
 --
 -- Table structure for table `club`
 --
-
+DROP TABLE IF EXISTS `club`;
 CREATE TABLE IF NOT EXISTS `club` (
   `id` int(11) NOT NULL,
   `name` varchar(11) CHARACTER SET utf8 NOT NULL,
@@ -46,14 +46,14 @@ INSERT INTO `club` (`id`, `name`, `count`) VALUES
 (5, '许纬闽', 0),
 (6, '王禹尊', 0),
 (7, '王粤秀', 0),
-(8, '王粤秀', 0);
+(8, '张仁杰', 0);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `management`
 --
-
+DROP TABLE IF EXISTS `management`;
 CREATE TABLE IF NOT EXISTS `management` (
   `id` int(11) NOT NULL,
   `name` varchar(11) CHARACTER SET utf8 NOT NULL,
@@ -71,7 +71,7 @@ INSERT INTO `management` (`id`, `name`, `count`) VALUES
 (4, '刘希海', 0),
 (5, '王子城', 0),
 (6, '张彧', 0),
-(7, '张泽锦', 0),
+(7, '张泽棉', 0),
 (8, '周中柱', 0);
 
 -- --------------------------------------------------------
@@ -100,7 +100,7 @@ CREATE TABLE `user` (
 --
 -- Table structure for table `vote_info`
 --
-
+DROP TABLE IF EXISTS `vote_info`;
 CREATE TABLE IF NOT EXISTS `vote_info` (
   `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

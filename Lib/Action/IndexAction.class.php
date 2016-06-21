@@ -19,9 +19,9 @@ class IndexAction extends Action {
   const VOTE_STATE_CLUB = 3;
   const VOTE_STATE_END = 4;
   const NUM_OF_MANAGEMENT = 8;
-  const NUM_OF_CLUB = 12;
+  const NUM_OF_CLUB = 8;
   const NUM_OF_VOTE_LIMIT_MANAGEMENT = 6;
-  const NUM_OF_VOTE_LIMIT_CLUB = 7;
+  const NUM_OF_VOTE_LIMIT_CLUB = 6;
   const MSG_VOTE_NOT_START = '投票环节尚未开始，您还可以仔细地思考手上的选票给哪位候选人喔:)';
   const MSG_CLUB_VOTE_NOT_START = '团委投票已经结束，但学生会投票环节尚未开始，您还可以仔细地思考手上的选票给哪位候选人喔';
   const MSG_VOTE_END = "投票环节已经结束！\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！";
@@ -79,7 +79,7 @@ class IndexAction extends Action {
             } 
           }
           else {
-            $weObj->text("抱歉，您输入的候选人投票代码有误，请重新输入。\n回复\"团委\"可查看本次换届选举团委8名候选人的详细资料。\n回复\"学生会\"可查看本次换届选举12名学生会候选人的详细资料。\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！")->reply();#\n回复“管理部”可查看管理部目前的投票结果\n回复“俱乐部”可查看俱乐部投票结果。\n感谢您对中山大学学生软件技术发展中心的大理支持！")->reply();
+            $weObj->text("抱歉，您输入的候选人投票代码有误，请重新输入。\n回复\"团委\"可查看本次换届选举团委8名候选人的详细资料。\n回复\"学生会\"可查看本次换届选举8名学生会候选人的详细资料。\n感谢您对数据科学与计算机学院第二次团员代表大会暨学生代表大会的大力支持！")->reply();#\n回复“管理部”可查看管理部目前的投票结果\n回复“俱乐部”可查看俱乐部投票结果。\n感谢您对中山大学学生软件技术发展中心的大理支持！")->reply();
           }
         }
         #选举人
@@ -296,7 +296,7 @@ class IndexAction extends Action {
         }
         break;
       default:
-        $weObj->text("感谢关注数据科学与计算机学院团委！\n数据科学与计算机学院第二次团员代表大会暨学生代表大会正火热进行中！\n回复\"团委\"可查看团委8名候选人详细资料。\n回复\"学生会\"可查看学生会12名候选人的详细资料。\n")->reply();   
+        $weObj->text("感谢关注数据科学与计算机学院团委！\n数据科学与计算机学院第二次团员代表大会暨学生代表大会正火热进行中！\n回复\"团委\"可查看团委8名候选人详细资料。\n回复\"学生会\"可查看学生会8名候选人的详细资料。\n")->reply();   
     }
   }
 
@@ -370,8 +370,18 @@ class IndexAction extends Action {
                 )
              ); 
      $weObj->news( $data )->reply();*/
-     $data = "1号候选人：...2号候选人...";
-     $weObj->text($data)->reply();
+     $data = array(
+      "0"=>array(
+        'Title'=>'团委候选人名单信息',
+        'Description'=>'1号毕胜  2号焦轩  3号梁宇嫣  4号刘希海
+5号王子城  6号张彧  7号张泽棉  8号周中柱
+点击查看详情',
+        'PicUrl'=>'https://mmbiz.qlogo.cn/mmbiz/Zb5U8FaJhMlPwsFFD3K8ibLSeQG9HwZp3McvXnia0jziaGTd2HaoIq0XicSzZdPmib4A9kuib75Dt9G3MK1YBJ5yTV3Q/0?wx_fmt=png',
+        'Url'=>'http://url.cn/2FIbCyl'
+      )
+     );
+     #$data = "1号候选人：...2号候选人...";
+     $weObj->news($data)->reply();
      return true;
      break;
     case '学生会':
@@ -414,8 +424,17 @@ class IndexAction extends Action {
                 )
               ); 
      $weObj->news( $c_data )->reply();*/
-     $c_data = "一号候选人...二号候选人...";
-     $weObj->text($c_data)->reply();
+     $c_data = array(
+      "0"=>array(
+        'Title'=>'学生会候选人名单信息',
+        'Description'=>'1号曹婉婷  2号丰光南  3号胡南  4号黄宇阳
+5号许纬闽  6号王禹尊  7号王粤秀  8号张仁杰
+点击查看详情',
+        'PicUrl'=>'https://mmbiz.qlogo.cn/mmbiz/Zb5U8FaJhMlPwsFFD3K8ibLSeQG9HwZp3McvXnia0jziaGTd2HaoIq0XicSzZdPmib4A9kuib75Dt9G3MK1YBJ5yTV3Q/0?wx_fmt=png',
+        'Url'=>'http://url.cn/2A60HXv'
+      )
+     );
+     $weObj->news($c_data)->reply();
      return true;
      break;
     default:
