@@ -4,7 +4,7 @@
 
 项目目前运行在 115.28.17.113/vote  (阿里云，未申请域名)
 
-项目运行环境：ubuntu(windows亦可)，Apache2，MySQL (Apache和MySQL建议使用XAMPP配置)，ThinkPHP框架
+项目运行环境：ubuntu(windows亦可)，Apache2，MySQL (Apache和MySQL建议使用XAMPP配置，注意xampp带的MySQL是没有加到环境变量里去的，要么自己再装个，要么把/opt/lampp/mysql加到环境变量里去)，ThinkPHP框架(3.1的老版本框架了，新框架改了不少技术细节，代码迁移真的心累)
 
 项目与微信公众平台对接，直接访问url无法对接
 
@@ -18,11 +18,13 @@ $weObj->valid();
 如显示验证失败，请检查：
 1⃣️直接访问url是否返回no access，如没有请检查代码是否能正常运行，注意 Lib/ORG/wechat.class.php是微信的SDK，检查是否上传
 2⃣️核对url，token是否正确，检查valid函数
+3⃣️重启服务器(笑，这方面给不了太多建议，只能说按照平时web调试那些步骤去做)
 
 2，数据库方面的操作需要远程服务器完成，或者访问phpmyadmin导入脚本。
 Lib/Action/ 中有几个操作数据库的脚本
 center.sql是一个老版本的脚本，废弃
 vote.sql 里生成一个名为 vote 的数据库，和四张表
+还有个python脚本把提供的人名格式化成带验证码的文本
 club和management是两张候选人的表，sql脚本中已插入候选人名单，可直接修改，初试票数请置为0，以免打脸
 vote_info表示投票阶段
 user表示选举人的名单，每人对应一个验证码，auth代表用户类型，-1为未认证，0为管理员，1为选举人
